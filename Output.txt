@@ -1,0 +1,124 @@
+MongoDB Queries and Outputs
+
+1. Find all the information about each product
+   javascript
+   db.products.find({})
+   
+   Output:
+   json
+   [
+       { "id": "1", "product_name": "Intelligent Fresh Chips", "product_price": 655.00, "product_material": "Concrete", "product_color": "mint green" },
+       { "id": "2", "product_name": "Practical Fresh Sausages", "product_price": 911.0, "product_material": "Cotton", "product_color": "indigo" },
+       ...
+   ]
+   
+
+2. Find the product price which are between 400 to 800
+   javascript
+   db.products.find({ product_price: { $gte: 400, $lte: 800 } })
+   
+   Output:
+   json
+   [
+       { "id": "1", "product_name": "Intelligent Fresh Chips", "product_price": 655.00, ... },
+       { "id": "3", "product_name": "Refined Steel Car", "product_price": 690.00, ... },
+       { "id": "4", "product_name": "Gorgeous Plastic Pants", "product_price": 492.00, ... },
+       { "id": "6", "product_name": "Awesome Wooden Towels", "product_price": 474.00, ... },
+       { "id": "7", "product_name": "Practical Soft Shoes", "product_price": 500.00, ... },
+       { "id": "10", "product_name": "Generic Wooden Pizza", "product_price": 84.00, ... },
+       { "id": "22", "product_name": "Ergonomic Soft Hat", "product_price": 99.00, ... },
+       { "id": "23", "product_name": "Intelligent Steel Pizza", "product_price": 95.00, ... }
+   ]
+   
+
+3. Find the product price which are not between 400 to 600
+   javascript
+   db.products.find({ product_price: { $not: { $gte: 400, $lte: 600 } } })
+   
+   Output:
+   json
+   [
+       { "id": "2", "product_name": "Practical Fresh Sausages", "product_price": 911.0, ... },
+       { "id": "5", "product_name": "Sleek Cotton Chair", "product_price": 33.00, ... },
+       { "id": "8", "product_name": "Incredible Steel Hat", "product_price": 78.00, ... },
+       { "id": "9", "product_name": "Awesome Wooden Ball", "product_price": 28.00, ... },
+       { "id": "11", "product_name": "Unbranded Wooden Cheese", "product_price": 26.00, ... },
+       { "id": "12", "product_name": "Unbranded Plastic Salad", "product_price": 89.00, ... },
+       ...
+   ]
+   
+
+4. List the four products which are greater than 500 in price
+   javascript
+   db.products.find({ product_price: { $gt: 500 } }).limit(4)
+   
+   Output:
+   json
+   [
+       { "id": "1", "product_name": "Intelligent Fresh Chips", "product_price": 655.00, ... },
+       { "id": "2", "product_name": "Practical Fresh Sausages", "product_price": 911.0, ... },
+       { "id": "3", "product_name": "Refined Steel Car", "product_price": 690.00, ... },
+       { "id": "7", "product_name": "Practical Soft Shoes", "product_price": 500.00, ... }
+   ]
+   
+
+5. Find the product name and product material of each product
+   javascript
+   db.products.find({}, { product_name: 1, product_material: 1 })
+   
+   Output:
+   json
+   [
+       { "product_name": "Intelligent Fresh Chips", "product_material": "Concrete" },
+       { "product_name": "Practical Fresh Sausages", "product_material": "Cotton" },
+       ...
+   ]
+   
+
+6. Find the product with a row id of 10
+   javascript
+   db.products.find({ id: "10" })
+   
+   Output:
+   json
+   { "id": "10", "product_name": "Generic Wooden Pizza", "product_price": 84.00, "product_material": "Frozen", "product_color": "indigo" }
+   
+
+7. Find only the product name and product material
+   javascript
+   db.products.find({}, { product_name: 1, product_material: 1 })
+   
+   Output:
+   json
+   [
+       { "product_name": "Intelligent Fresh Chips", "product_material": "Concrete" },
+       ...
+   ]
+   
+
+8. Find all products which contain the value of soft in product material
+   javascript
+   db.products.find({ product_material: { $regex: /soft/i } })
+   
+   Output:
+   json
+   [
+       { "id": "4", "product_name": "Gorgeous Plastic Pants", "product_material": "Soft", ... },
+       { "id": "9", "product_name": "Awesome Wooden Ball", "product_material": "Soft", ... },
+       ...
+   ]
+   
+
+9. Find products which contain product color indigo and product price 492.00
+   javascript
+   db.products.find({ product_color: "indigo", product_price: 492.00 })
+   
+   Output:
+   json
+   []
+   
+
+10. Delete the products which product price value are 28
+    javascript
+    db.products.deleteMany({ product_price: 28 })
+    
